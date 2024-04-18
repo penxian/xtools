@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>时间戳转换器</title>
+  </head>
+  <body class="p-20 h-screen w-screen">
+    <div class="h-full w-full shadow-lg rounded-sm p-6">
+      <div>
+        <button
+          id="second"
+          class="w-20 border border-cyan-600 h-8 text-cyan-600 active"
+        >
+          秒
+        </button>
+        <button
+          id="millisecond"
+          class="w-20 border border-cyan-600 h-8 text-cyan-600"
+        >
+          毫秒
+        </button>
+      </div>
+      <div class="flex items-end gap-5 mt-4">
+        <div class="flex flex-col">
+          <label class="text-cyan-600">时间戳</label>
+          <input
+            id="timestamp"
+            class="w-50 border border-cyan-600 text-cyan-600 px-1 rounded-sm h-8"
+          />
+        </div>
+        <span>-</span>
+        <div id="time" class="flex flex-col"></div>
+      </div>
+      <div class="flex items-end gap-5 mt-4">
+        <div class="flex flex-col">
+          <label class="text-cyan-600">时间</label>
+          <input
+            id="forTime"
+            class="w-50 border border-cyan-600 text-cyan-600 px-1 rounded-sm h-8"
+          />
+        </div>
+        <span>-</span>
+        <div id="forTimeStamp" class="flex flex-col"></div>
+      </div>
+      <div class="mt-4 grid grid-cols-6 grid-flow-col">
+        <div class="col-start-1 col-span-1">当前时间戳:</div>
+        <div class="col-start-3">时间:</div>
+        <div class="col-start-1 col-span-1" id="nowTimeStamp"></div>
+        <div class="col-start-3 col-span-2" id="timeFormat"></div>
+        <button
+          id="stop"
+          class="col-start-5 row-start-2 border w-20 h-8 border-cyan-600 text-cyan-600 active:bg-cyan-500 active:text-white"
+        >
+          暂停
+        </button>
+      </div>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "logo": "logo.png",
+  "main": "index.html",
+  "preload": "./preload.js",
+  "features": [
+    {
+      "code": "time",
+      "explain": "时间戳",
+      "cmds": ["sj", "时间"]
+    }
+  ],
+  "development": {
+    "main": "http://localhost:5173/"
+  }
+}
