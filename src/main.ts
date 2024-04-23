@@ -1,69 +1,72 @@
 import './style.css'
-
-function dealTime(value: string) {
-  const t = new Date(parseInt(value))
-  const year = t.toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' }) + ' ' + t.toLocaleTimeString()
+import dayjs from 'dayjs'
+import utc from 'dayjs/plugin/utc'
+import timezone from 'dayjs/plugin/timezone'
+import TimeZoneList from './timeZone'
+dayjs.extend(utc)
+dayjs.extend(timezone)
+// 时间戳=>时间转
+function timestapToStr(value: string) {
   const time = document.querySelector<HTMLElement>("#time")
-  if (time) {
-    time.innerHTML = `${year}`
+  if (!value) {
+    if (time) {
+      time.innerText = ''
+    }
+  } else {
+    const t = dayjs(parseInt(value))
+    const timezoneSelect = document.querySelector<HTMLSelectElement>("#timezoneselect")
+    const f = t.tz(timezoneSelect?.value || "Asia/Shanghai")
+    const year = f.format('YYYY-MM-DD HH:mm:ss')
+    if (time) {
+      time.innerText = `${year}`
+    }
   }
 }
 
+// 时间戳转换时间
 const timestamp = document.querySelector<HTMLInputElement>("#timestamp")
-
 if (timestamp) {
-  timestamp.value = new Date().valueOf().toString()
-  dealTime(timestamp.value)
   timestamp.addEventListener("input", (e: Event) => {
     const value = (e.target as HTMLInputElement).value
-    dealTime(value)
+    timestapToStr(value)
   });
 }
 
-function dealForTime(value: string) {
-  const t = new Date(value)
+// 时间戳=>时间
+function strToTimestap(value: string) {
+  const timezoneSelect = document.querySelector<HTMLSelectElement>("#timezoneselect")
+  const t = dayjs(value).tz(timezoneSelect?.value || "Asia/Shanghai", true)
   const time = document.querySelector<HTMLElement>("#forTimeStamp")
   if (time) {
-    time.innerHTML = `${t.valueOf()}`
+    time.innerText = `${t.valueOf()}`
   }
 }
 
+// 时间转换时间戳
 const forTime = document.querySelector<HTMLInputElement>("#forTime")
 if (forTime) {
-  const t = new Date()
-  const year = t.toLocaleDateString(undefined, { year: 'numeric', month: '2-digit', day: '2-digit' }) + ' ' + t.toLocaleTimeString()
-  forTime.value = year
-  dealForTime(year)
   forTime.addEventListener("input", (e: Event) => {
     const value = (e.target as HTMLInputElement).value
-    dealForTime(value)
+    strToTimestap(value)
   });
 }
 
-// 按钮切换
-const millisecond = document.querySelector<HTMLButtonElement>("#millisecond")
-const second = document.querySelector<HTMLButtonElement>("#second")
-second?.addEventListener('click', (e: Event) => {
-  (millisecond?.classList as DOMTokenList).remove("active");
-  (e.target as HTMLButtonElement).classList.add("active");
-})
-
-millisecond?.addEventListener('click', (e: Event) => {
-  (second?.classList as DOMTokenList).remove("active");
-  (e.target as HTMLButtonElement).classList.add("active");
-})
-
+// 当前时间戳
 const nowTimeStamp = document.querySelector<HTMLElement>("#nowTimeStamp")
 const timeFormat = document.querySelector<HTMLElement>("#timeFormat");
-// 当前时间戳
 
 function dealNowTimeStamp() {
-  const date = new Date()
+  if (document.querySelector('[name=time]:checked')) {
+
+  }
+  const date = dayjs()
+  const timezoneSelect = document.querySelector<HTMLSelectElement>("#timezoneselect")
   if (nowTimeStamp) {
-    nowTimeStamp.innerHTML = date.valueOf().toString()
+    nowTimeStamp.innerText = date.valueOf().toString()
   }
   if (timeFormat) {
-    timeFormat.innerHTML = date.toLocaleString();
+    const f = date.tz(timezoneSelect?.value)
+    timeFormat.innerText = f.format("YYYY-MM-DD HH:mm:ss");
   }
 }
 let tk: number = setInterval(dealNowTimeStamp, 1000)
@@ -73,12 +76,38 @@ document.querySelector<HTMLButtonElement>('#stop')?.addEventListener('click', (e
     clearInterval(tk)
     tk = 0
     if (e.target) {
-      (e.target as HTMLButtonElement).innerHTML = "继续"
+      (e.target as HTMLButtonElement).innerText = "继续"
     }
   } else {
     tk = setInterval(dealNowTimeStamp, 1000)
     if (e.target) {
-      (e.target as HTMLButtonElement).innerHTML = "暂停"
+      (e.target as HTMLButtonElement).innerText = "暂停"
     }
   }
 })
+
+
+// 时区初始化
+
+const timezoneSelect = document.querySelector<HTMLSelectElement>("#timezoneselect")
+if (timezoneSelect) {
+  timezoneSelect.addEventListener("change", (e: Event) => {
+    const value = (e.target as HTMLSelectElement).value
+    window.console.log(value, '====')
+    if (timestamp && timestamp.value) {
+      timestapToStr(timestamp.value)
+    }
+    if (forTime && forTime.value) {
+      strToTimestap(forTime.value)
+    }
+  })
+  TimeZoneList.forEach((item) => {
+    const optionElement = document.createElement("option");
+    optionElement.value = item.timeZoneName;
+    optionElement.text = item.timeZoneDesc;
+    timezoneSelect.appendChild(optionElement);
+  })
+  const localTimeZone = new Intl.DateTimeFormat().resolvedOptions().timeZone
+  timezoneSelect.value = localTimeZone
+  console.log(localTimeZone)
+}

@@ -2,6 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: "DingTalkJinBuTi";
+    font-style: normal;
+    src: url(/public/DingTalkJinBuTi-Regular.ttf) format('TrueType');
+  }
+}
+
 .active {
   @apply text-white bg-cyan-600;
 }

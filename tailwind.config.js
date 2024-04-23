@@ -2,7 +2,11 @@
 export default {
   content: ["./index.html"],
   theme: {
-    extend: {}
+    extend: {
+      fontFamily: {
+        DingTalkJinBuTi: ["DingTalkJinBuTi", "sans-serif"]
+      }
+    }
   },
-  plugins: []
+  plugins: [require("daisyui")]
 };

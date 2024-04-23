@@ -5,52 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>时间戳转换器</title>
   </head>
-  <body class="p-20 h-screen w-screen">
-    <div class="h-full w-full shadow-lg rounded-sm p-6">
-      <div>
-        <button
-          id="second"
-          class="w-20 border border-cyan-600 h-8 text-cyan-600 active"
+  <body class="p-20 h-screen w-screen font-DingTalkJinBuTi">
+    <div class="h-full w-full rounded-sm p-6">
+      <!-- Tab 按钮 -->
+      <div class="flex gap-2">
+        <label
+          for="secondt"
+          class="grid place-content-center cursor-pointer has-[:checked]:bg-cyan-600 has-[:checked]:text-white w-20 border border-cyan-600 h-8 text-cyan-600"
         >
+          <input
+            id="secondt"
+            type="radio"
+            checked
+            name="time"
+            class="appearance-none"
+          />
           秒
-        </button>
-        <button
-          id="millisecond"
-          class="w-20 border border-cyan-600 h-8 text-cyan-600"
+        </label>
+        <label
+          for="secondt1"
+          class="grid place-content-center cursor-pointer has-[:checked]:bg-cyan-600 has-[:checked]:text-white w-20 border border-cyan-600 h-8 text-cyan-600"
         >
+          <input
+            id="secondt1"
+            type="radio"
+            name="time"
+            class="appearance-none"
+          />
           毫秒
-        </button>
+        </label>
+        <select
+          class="select select-sm w-full max-w-xs select-bordered"
+          id="timezoneselect"
+        ></select>
       </div>
       <div class="flex items-end gap-5 mt-4">
-        <div class="flex flex-col">
+        <div class="flex flex-col gap-1">
           <label class="text-cyan-600">时间戳</label>
           <input
             id="timestamp"
-            class="w-50 border border-cyan-600 text-cyan-600 px-1 rounded-sm h-8"
+            placeholder="请输入时间戳"
+            class="w-52 hover:border-cyan-500 border border-cyan-600 text-cyan-600 px-1 rounded-sm h-8"
           />
         </div>
         <span>-</span>
         <div id="time" class="flex flex-col"></div>
       </div>
       <div class="flex items-end gap-5 mt-4">
-        <div class="flex flex-col">
-          <label class="text-cyan-600">时间</label>
+        <div class="flex flex-col gap-1">
+          <label class="text-cyan-600">时间(格式为YYYY-MM-DD HH:mm:ss)</label>
           <input
             id="forTime"
-            class="w-50 border border-cyan-600 text-cyan-600 px-1 rounded-sm h-8"
+            placeholder="请输入时间"
+            class="w-52 hover:border-cyan-500 border border-cyan-600 text-cyan-600 px-1 rounded-sm h-8"
           />
         </div>
         <span>-</span>
         <div id="forTimeStamp" class="flex flex-col"></div>
       </div>
-      <div class="mt-4 grid grid-cols-6 grid-flow-col">
-        <div class="col-start-1 col-span-1">当前时间戳:</div>
-        <div class="col-start-3">时间:</div>
-        <div class="col-start-1 col-span-1" id="nowTimeStamp"></div>
-        <div class="col-start-3 col-span-2" id="timeFormat"></div>
+      <div
+        class="mt-4 grid grid-cols-[200px_1fr_1fr_1fr] grid-rows-[1fr_40px] items-center grid-flow-col"
+      >
+        <div class="col-start-1 col-span-1 text-zinc-600">时间:</div>
+        <div class="col-start-2 text-zinc-600">当前时间戳:</div>
+        <div class="col-start-2 col-span-1" id="nowTimeStamp"></div>
+        <div class="col-start-1 col-span-1" id="timeFormat"></div>
         <button
           id="stop"
-          class="col-start-5 row-start-2 border w-20 h-8 border-cyan-600 text-cyan-600 active:bg-cyan-500 active:text-white"
+          class="col-start-3 row-start-2 border w-20 h-8 border-cyan-600 text-cyan-600 active:bg-cyan-500 active:text-white"
         >
           暂停
         </button>
