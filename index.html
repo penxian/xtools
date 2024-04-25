@@ -6,9 +6,13 @@
     <title>时间戳转换器</title>
   </head>
   <body class="p-20 h-screen w-screen font-DingTalkJinBuTi">
-    <div class="h-full w-full rounded-sm p-6">
+    <div class="h-full w-full rounded-sm">
+      <select
+        class="select select-sm w-1/2 select-bordered"
+        id="timezoneselect"
+      ></select>
       <!-- Tab 按钮 -->
-      <div class="flex gap-2">
+      <div class="flex gap-2 mt-4">
         <label
           for="secondt"
           class="grid place-content-center cursor-pointer has-[:checked]:bg-cyan-600 has-[:checked]:text-white w-20 border border-cyan-600 h-8 text-cyan-600"
@@ -18,9 +22,10 @@
             type="radio"
             checked
             name="time"
+            value="millisecond"
             class="appearance-none"
           />
-          秒
+          毫秒
         </label>
         <label
           for="secondt1"
@@ -30,52 +35,66 @@
             id="secondt1"
             type="radio"
             name="time"
+            value="second"
             class="appearance-none"
           />
-          毫秒
+          秒
         </label>
-        <select
-          class="select select-sm w-full max-w-xs select-bordered"
-          id="timezoneselect"
-        ></select>
       </div>
       <div class="flex items-end gap-5 mt-4">
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1 w-1/2">
           <label class="text-cyan-600">时间戳</label>
           <input
             id="timestamp"
             placeholder="请输入时间戳"
-            class="w-52 hover:border-cyan-500 border border-cyan-600 text-cyan-600 px-1 rounded-sm h-8"
+            class="w-full hover:border-cyan-500 border border-cyan-600 text-cyan-600 px-1 rounded-sm h-8"
           />
         </div>
         <span>-</span>
-        <div id="time" class="flex flex-col"></div>
+        <div class="tooltip" data-tip="点击复制">
+          <div id="time" class="flex flex-col cursor-pointer"></div>
+        </div>
       </div>
       <div class="flex items-end gap-5 mt-4">
-        <div class="flex flex-col gap-1">
+        <div class="flex flex-col gap-1 w-1/2">
           <label class="text-cyan-600">时间(格式为YYYY-MM-DD HH:mm:ss)</label>
           <input
             id="forTime"
             placeholder="请输入时间"
-            class="w-52 hover:border-cyan-500 border border-cyan-600 text-cyan-600 px-1 rounded-sm h-8"
+            class="w-full hover:border-cyan-500 border border-cyan-600 text-cyan-600 px-1 rounded-sm h-8"
           />
         </div>
         <span>-</span>
-        <div id="forTimeStamp" class="flex flex-col"></div>
+        <div class="tooltip" data-tip="点击复制">
+          <div id="forTimeStamp" class="flex flex-col cursor-pointer"></div>
+        </div>
       </div>
       <div
         class="mt-4 grid grid-cols-[200px_1fr_1fr_1fr] grid-rows-[1fr_40px] items-center grid-flow-col"
       >
-        <div class="col-start-1 col-span-1 text-zinc-600">时间:</div>
+        <div class="col-start-1 col-span-1 text-zinc-600">当前时间:</div>
         <div class="col-start-2 text-zinc-600">当前时间戳:</div>
-        <div class="col-start-2 col-span-1" id="nowTimeStamp"></div>
-        <div class="col-start-1 col-span-1" id="timeFormat"></div>
+        <div
+          class="tooltip col-start-2 col-span-1 text-left cursor-pointer"
+          data-tip="点击复制"
+          id="nowTimeStamp"
+        ></div>
+        <div
+          class="tooltip col-start-1 col-span-1 text-left cursor-pointer"
+          data-tip="点击复制"
+          id="timeFormat"
+        ></div>
         <button
           id="stop"
           class="col-start-3 row-start-2 border w-20 h-8 border-cyan-600 text-cyan-600 active:bg-cyan-500 active:text-white"
         >
           暂停
         </button>
+      </div>
+    </div>
+    <div id="toast" class="toast toast-center toast-top hidden">
+      <div class="alert alert-success text-white">
+        <span></span>
       </div>
     </div>
     <script type="module" src="/src/main.ts"></script>
