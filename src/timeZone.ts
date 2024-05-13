@@ -1,4 +1,4 @@
-type TimeZone = {
+export type TimeZone = {
   timeZoneID: string;
   timeZoneDesc: string;
   timeZoneName: string;
