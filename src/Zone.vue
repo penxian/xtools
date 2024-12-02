@@ -39,7 +39,7 @@ onMounted(() => {
   <div class="h-[calc(100vh-20rem)] overflow-auto">
     <div class="flex flex-col">
       <div v-for="(item, index) in country" :key="index" class="flex items-center gap-2">
-        <img :src="`/public/flag/${item.code}`" class="w-[38px] h-[38px]" />
+        <img :src="`/flag/${item.code}`" class="w-[38px] h-[38px]" />
         <span class="flex-auto">{{ item.country }} ({{ item.city }})</span>
         <span class="text-xs text-gray-500">{{ item.timeZone }}( {{ dayjs().tz(item.timeZone).format('Z') }})</span>
         <span class="text-right font-mono">{{ item.time }}</span>
