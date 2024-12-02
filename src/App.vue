@@ -3,6 +3,7 @@ import { computed, onMounted, reactive, ref } from 'vue';
 import dayjs from 'dayjs';
 import TimeZoneList, { TimeZone } from './timeZone'
 import copyText from './copyText'
+import Zone from './Zone.vue';
 
 
 enum TimeType {
@@ -19,8 +20,10 @@ const forTime = ref<string>('')
 const nowTimeStamp = ref<string>('')
 const timeFormat = ref<string>('')
 
+
 const timelabel = computed(() => {
   if (!timestamp.value) return ""
+  timestamp.value = time.value === TimeType.Millisecond ? timestamp.value.padEnd(13, '0') : timestamp.value.substring(0, 10)
   const t = time.value === TimeType.Millisecond ? dayjs(parseInt(timestamp.value)) : dayjs.unix(parseInt(timestamp.value))
   const f = t.tz(timezoneSelect.value || "Asia/Shanghai")
   return f.format('YYYY-MM-DD HH:mm:ss')
@@ -29,11 +32,10 @@ const timelabel = computed(() => {
 const forTimeStamp = computed(() => {
   if (!forTime.value) return ""
   const t = dayjs(forTime.value).tz(timezoneSelect.value || "Asia/Shanghai", true)
-  return TimeType.Millisecond ? t.valueOf() : t.unix().toString()
+  return time.value === TimeType.Millisecond ? t.valueOf() : t.unix().toString()
 })
 
 function dealNowTimeStamp() {
-  window.console.log(time.value, '=============')
   const date = dayjs()
   if (nowTimeStamp) {
     const t = date.unix().toString()
@@ -135,7 +137,7 @@ onMounted(() => {
 
     <input type="radio" name="my_tabs_2" role="tab" class="tab" aria-label="时区" />
     <div role="tabpanel" class="tab-content bg-base-100 border-base-300 rounded-box p-6">
-      Tab content 2
+      <Zone />
     </div>
   </div>
 </template>
